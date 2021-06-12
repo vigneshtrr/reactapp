@@ -1,13 +1,14 @@
 
 # Dockerfile
 # specify the builder ("builder" can be any tag)
-FROM microsoft/windowsservercore as builder
+FROM mcr.microsoft.com/windows/servercore:1803 as installer
+
 
 # set working directory
 WORKDIR /src
 
 # install node and delete the install file
-COPY "node-v8.12.0-x64.msi" node.msi
+COPY "node-v12.4.0-win-x64.msi" node.msi
 ### Optionally, the installer could be downloaded as follows (not recommended)
 # Invoke-WebRequest $('https://nodejs.org/dist/v{0}/node-v{0}-x64.msi' -f $env:NODE_VERSION) -OutFile 'node.msi'
 RUN msiexec.exe /q /i node.msi
