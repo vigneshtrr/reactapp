@@ -15,16 +15,19 @@ WORKDIR C:\nodejs
 COPY --from=installer C:\nodejs\ .
 RUN SETX PATH C:\nodejs
 RUN npm config set registry https://registry.npmjs.org/
-# set working directory
-WORKDIR /src
 
 # install node and delete the install file
 COPY "node-v12.4.0-win-x64.msi" node.msi
+
+
 ### Optionally, the installer could be downloaded as follows (not recommended)
 # Invoke-WebRequest $('https://nodejs.org/dist/v{0}/node-v{0}-x64.msi' -f $env:NODE_VERSION) -OutFile 'node.msi'
 RUN msiexec.exe /q /i node.msi
 RUN del node.msi
 
+# set working directory
+
+WORKDIR /src
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH  /node_modules/.bin:$PATH
 
